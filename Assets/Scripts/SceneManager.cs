@@ -11,4 +11,9 @@ public class SceneManager : MonoBehaviour
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene");
     }
+
+    public void OpenTestPoligon()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("TestPoligon");
+    }
 }
