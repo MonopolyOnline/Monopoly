@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -29,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
             sectorPlayer[1] += random.Next(1, 6);
             if (sectorPlayer[1] > 40)
                 sectorPlayer[1] -= 40;
-            player[1].transform.position = GameObject.Find(Convert.ToString(sectorPlayer[1])).transform.position; 
+            player[1].transform.position = GameObject.Find(Convert.ToString(sectorPlayer[1])).transform.position;
         }
 
 
@@ -55,4 +53,3 @@ public class PlayerMovement : MonoBehaviour
 
 
 }
-class  
