@@ -1,18 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEditor;
 using UnityEngine;
 
 public class DominacionStart : MonoBehaviour
 {
+    static System.Random random = new System.Random();
+    int sectorPlayer1 = 0;
     void Start()
     {
+        Create();
+    }
+
+    private void FixedUpdate()
+    {
+        if (Input.GetKey(KeyCode.Space))
+        {
+            sectorPlayer1 += Random.Range(1, 6);
+            if (sectorPlayer1 > 60)
+                sectorPlayer1 -= 60;
+            GameObject.Find("Play 1").transform.position = GameObject.Find(sectorPlayer1.ToString()).transform.position;
+        }
+    }
+
+
+    void Create()
+    {
+        //Создание основы
+        GameObject basis = Instantiate(GameObject.Find("BasisCopy"), new UnityEngine.Vector3(0,0,0), new UnityEngine.Quaternion(0, 0, 0, 0));
+        basis.name = "Basis";
+        //Создание фона
+        GameObject backgroundCopy = Instantiate(GameObject.Find("BackgroundCopy"), new UnityEngine.Vector3(0, 0.05f, 0), new UnityEngine.Quaternion(0, 0, 0, 0));
+        backgroundCopy.name = "Background";
+        //Создание игроков
+        GameObject play = Instantiate(GameObject.Find("Play"), new UnityEngine.Vector3(-9f, 0f, 4f), new UnityEngine.Quaternion(0, 0, 0, 0));
+        play.name = "Play 1";
         //Создание секторов
-        for (float i = 1, Qy = 0f, Ox=0, r=-1; i <= 60f; i++)
+        for (float i = 1, Qy = 0f, Ox = 0f, r = -1; i <= 52f; i++)
         {
             if (i == 1)
             {
-                Vector3 vector3 = new Vector3(-9.25f, 0, 4.25f);
+                UnityEngine.Vector3 vector3 = new UnityEngine.Vector3 (-9.25f, 0f, 4.25f);
                 CreateSector(i, vector3);
                 r++;
                 Ox = 0;
@@ -20,76 +49,76 @@ public class DominacionStart : MonoBehaviour
             }
             if (i <= 18)
             {
-                Vector3 vector3 = new Vector3 (-8f+Ox, 0f, 4.25f);
+                UnityEngine.Vector3 vector3 = new UnityEngine.Vector3 (-8f + Ox, 0f, 4.25f);
                 CreateSector(i, Qy, vector3, r);
                 Ox++;
                 continue;
             }
             if (i == 19)
             {
-                Vector3 vector3 = new Vector3(9.25f, 0, 4.25f);
+                UnityEngine.Vector3 vector3 = new UnityEngine.Vector3(9.25f, 0, 4.25f);
                 CreateSector(i, vector3);
                 Qy += 90;
                 Ox = 0;
                 r++;
                 continue;
             }
-            if (i <= 27)
+            if (i <= 26)
             {
-                Vector3 vector3 = new Vector3(9.25f, 0f, 3f-Ox);
+                UnityEngine.Vector3 vector3 = new UnityEngine.Vector3(9.25f, 0f, 3f - Ox);
                 CreateSector(i, Qy, vector3, r);
                 Ox++;
                 continue;
             }
-            if (i == 28)
+            if (i == 27)
             {
-                Vector3 vector3 = new Vector3(9.25f, 0, -4.25f);
+                UnityEngine.Vector3 vector3 = new UnityEngine.Vector3(9.25f, 0f, -4.25f);
                 CreateSector(i, vector3);
                 Qy += 90;
                 Ox = 0;
                 r++;
                 continue;
             }
-            if (i <= 45)
+            if (i <= 44)
             {
-                Vector3 vector3 = new Vector3(8f-Ox, 0f, -4.25f);
+                UnityEngine.Vector3 vector3 = new UnityEngine.Vector3(8f - Ox, 0f, -4.25f);
                 CreateSector(i, Qy, vector3, r);
                 Ox++;
                 continue;
             }
-            if (i == 52)
+            if (i == 45)
             {
-                Vector3 vector3 = new Vector3(-9.25f, 0, -4.25f);
+                UnityEngine.Vector3 vector3 = new UnityEngine.Vector3(-9.25f, 0f, -4.25f);
                 CreateSector(i, vector3);
                 Qy += 90;
                 Ox = 0;
                 r++;
                 continue;
             }
-            if (i <= 60)
+            if (i <= 52)
             {
-                Vector3 vector3 = new Vector3(-9.25f, 0f, -3f+Ox);
+                UnityEngine.Vector3 vector3 = new UnityEngine.Vector3(-9.25f, 0f, -3f + Ox);
                 CreateSector(i, Qy, vector3, r);
                 Ox++;
                 continue;
             }
         }
     }
-
-
-    void CreateSector(float i, float Qy, Vector3 vector3, float r)
+    void CreateSector(float i, float Qy, UnityEngine.Vector3 vector3, float r)
     {
-        GameObject obgectName = Instantiate(GameObject.Find("Rect"), vector3, new Quaternion(0, 0, 0, 0));
+        GameObject obgectName = Instantiate(GameObject.Find("RectCopy"), vector3, new UnityEngine.Quaternion(0, 0, 0, 0));
         Debug.Log($"Create: Name-{i} Vector-{obgectName.transform.position} Quaternion-{obgectName.transform.rotation}");
-        obgectName.transform.Rotate(0f, 90f*r, 0f);
+        obgectName.transform.Rotate(0f, 90f * r, 0f);
         obgectName.name = i.ToString();
     }
-    void CreateSector(float i, Vector3 vector3)
+    void CreateSector(float i, UnityEngine.Vector3 vector3)
     {
-        GameObject obgectName = Instantiate(GameObject.Find("Square"), vector3, new Quaternion(0, 0, 0, 0));
+        GameObject obgectName = Instantiate(GameObject.Find("SquareCopy"), vector3, new UnityEngine.Quaternion(0, 0, 0, 0));
         Debug.Log($"Create: Name: {i} Vector: {obgectName.transform.position} Quaternion: {obgectName.transform.rotation}");
         obgectName.name = i.ToString();
     }
+
+
 
 
     /*
