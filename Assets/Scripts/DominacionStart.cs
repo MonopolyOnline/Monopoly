@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DominacionStart : MonoBehaviour
 {
@@ -7,22 +8,37 @@ public class DominacionStart : MonoBehaviour
     GamePlayer player1 = new GamePlayer("Play 1");
     GamePlayer player2 = new GamePlayer("Play 2");
 
+    [SerializeField] Material colorRed;
+    [SerializeField] Material colorBlue;
+
+    [SerializeField] Text balancePlayer1;
+    [SerializeField] Text balancePlayer2;
+
     void Start()
     {
         Create();
         player1.gameObject = GameObject.Find(player1.goName);
+        player1.gameObject.GetComponent<Renderer>().material = colorRed;
         player2.gameObject = GameObject.Find(player2.goName);
+        player2.gameObject.GetComponent<Renderer>().material = colorBlue;
     }
 
     private void Update()
     {
+        balancePlayer1.text = $"Баланс игрока 1: {player1.money}";
+        balancePlayer2.text = $"Баланс игрока 2: {player2.money}";
+
         if (player1.move)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 player1.sector += Random.Range(1, 6);
-                if (player1.sector > 60)
-                    player1.sector -= 60;
+                if (player1.sector > 52)
+                {
+                    player1.sector -= 52;
+                    player1.circlesCount++;
+                    player1.money += 500;
+                }
                 player1.gameObject.transform.position = GameObject.Find(player1.sector.ToString()).transform.position;
                 player1.move = false;
                 player2.move = true;
@@ -35,8 +51,12 @@ public class DominacionStart : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 player2.sector += Random.Range(1, 6);
-                if (player2.sector > 60)
-                    player2.sector -= 60;
+                if (player2.sector > 52)
+                {
+                    player2.sector -= 52;
+                    player2.circlesCount++;
+                    player2.money += 500;
+                }
                 player2.gameObject.transform.position = GameObject.Find(player2.sector.ToString()).transform.position;
                 player2.move = false;
                 player1.move = true;
@@ -125,6 +145,7 @@ public class DominacionStart : MonoBehaviour
             }
         }
     }
+
     void CreateSector(float i, float Qy, UnityEngine.Vector3 vector3, float r)
     {
         GameObject obgectName = Instantiate(GameObject.Find("RectCopy"), vector3, new UnityEngine.Quaternion(0, 0, 0, 0));
@@ -238,9 +259,14 @@ public class GamePlayer
     public static string gameObjectName { get; set; } = "";
     public string goName = gameObjectName;
     public GameObject gameObject;
-    public int money = 10000000;
+
+    public int money = 1000;
+
     public int sector = 0;
+
     public bool move = true;
+
+    public int circlesCount = 0;
 
     public GamePlayer(string goName)
     {
