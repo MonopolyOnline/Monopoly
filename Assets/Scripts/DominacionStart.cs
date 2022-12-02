@@ -1,26 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
-using UnityEditor;
 using UnityEngine;
-using static DominacionStart.Players;
 
 public class DominacionStart : MonoBehaviour
 {
     static System.Random random = new System.Random();
-    Player1 player1 = new Player1();
-    Player2 player2 = new Player2();
 
-
+    GamePlayer player1 = new GamePlayer("Play 1");
+    GamePlayer player2 = new GamePlayer("Play 2");
 
     void Start()
     {
         Create();
+        player1.gameObject = GameObject.Find(player1.goName);
+        player2.gameObject = GameObject.Find(player2.goName);
     }
-    private void FixedUpdate()
+
+    private void Update()
     {
         if (player1.move)
-        { 
+        {
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 player1.sector += Random.Range(1, 6);
@@ -28,7 +25,7 @@ public class DominacionStart : MonoBehaviour
                     player1.sector -= 60;
                 player1.gameObject.transform.position = GameObject.Find(player1.sector.ToString()).transform.position;
                 player1.move = false;
-                player2.move= true;
+                player2.move = true;
             }
             return;
         }
@@ -47,11 +44,10 @@ public class DominacionStart : MonoBehaviour
         }
     }
 
-
     void Create()
     {
         //Создание основы
-        GameObject basis = Instantiate(GameObject.Find("BasisCopy"), new UnityEngine.Vector3(0,0,0), new UnityEngine.Quaternion(0, 0, 0, 0));
+        GameObject basis = Instantiate(GameObject.Find("BasisCopy"), new UnityEngine.Vector3(0, 0, 0), new UnityEngine.Quaternion(0, 0, 0, 0));
         basis.name = "Basis";
         //Создание фона
         GameObject backgroundCopy = Instantiate(GameObject.Find("BackgroundCopy"), new UnityEngine.Vector3(0, 0.05f, 0), new UnityEngine.Quaternion(0, 0, 0, 0));
@@ -66,7 +62,7 @@ public class DominacionStart : MonoBehaviour
         {
             if (i == 1)
             {
-                UnityEngine.Vector3 vector3 = new UnityEngine.Vector3 (-9.25f, 0f, 4.25f);
+                UnityEngine.Vector3 vector3 = new UnityEngine.Vector3(-9.25f, 0f, 4.25f);
                 CreateSector(i, vector3);
                 r++;
                 Ox = 0;
@@ -74,7 +70,7 @@ public class DominacionStart : MonoBehaviour
             }
             if (i <= 18)
             {
-                UnityEngine.Vector3 vector3 = new UnityEngine.Vector3 (-8f + Ox, 0f, 4.25f);
+                UnityEngine.Vector3 vector3 = new UnityEngine.Vector3(-8f + Ox, 0f, 4.25f);
                 CreateSector(i, Qy, vector3, r);
                 Ox++;
                 continue;
@@ -142,27 +138,7 @@ public class DominacionStart : MonoBehaviour
         Debug.Log($"Create: Name: {i} Vector: {obgectName.transform.position} Quaternion: {obgectName.transform.rotation}");
         obgectName.name = i.ToString();
     }
-
-    public class Players
-    {
-        public class Player1
-        {
-            public GameObject gameObject = GameObject.Find("Play 1");
-            public int money = 10000000;
-            public int sector = 0;
-            public bool move = true;
-        }
-
-        public class Player2
-        {
-            public GameObject gameObject = GameObject.Find("Play 2");
-            public int money = 10000000;
-            public int sector = 0;
-            public bool move = true;
-        }
-    }
-
-
+    #region[ненужное]
     /*
      using System.Collections;
 using System.Collections.Generic;
@@ -254,4 +230,20 @@ public class DominacionStart : MonoBehaviour
 }
 
      */
+    #endregion
+}
+
+public class GamePlayer
+{
+    public static string gameObjectName { get; set; } = "";
+    public string goName = gameObjectName;
+    public GameObject gameObject;
+    public int money = 10000000;
+    public int sector = 0;
+    public bool move = true;
+
+    public GamePlayer(string goName)
+    {
+        gameObjectName = goName;
+    }
 }
