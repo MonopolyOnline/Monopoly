@@ -3,24 +3,47 @@ using System.Collections.Generic;
 using System.Numerics;
 using UnityEditor;
 using UnityEngine;
+using static DominacionStart.Players;
 
 public class DominacionStart : MonoBehaviour
 {
     static System.Random random = new System.Random();
-    int sectorPlayer1 = 0;
+    Player1 player1 = new Player1();
+    Player2 player2 = new Player2();
+
+
+
     void Start()
     {
         Create();
     }
-
     private void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (player1.move)
+        { 
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                player1.sector += Random.Range(1, 6);
+                if (player1.sector > 60)
+                    player1.sector -= 60;
+                player1.gameObject.transform.position = GameObject.Find(player1.sector.ToString()).transform.position;
+                player1.move = false;
+                player2.move= true;
+            }
+            return;
+        }
+
+        if (player2.move)
         {
-            sectorPlayer1 += Random.Range(1, 6);
-            if (sectorPlayer1 > 60)
-                sectorPlayer1 -= 60;
-            GameObject.Find("Play 1").transform.position = GameObject.Find(sectorPlayer1.ToString()).transform.position;
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                player2.sector += Random.Range(1, 6);
+                if (player2.sector > 60)
+                    player2.sector -= 60;
+                player2.gameObject.transform.position = GameObject.Find(player2.sector.ToString()).transform.position;
+                player2.move = false;
+                player1.move = true;
+            }
         }
     }
 
@@ -36,6 +59,8 @@ public class DominacionStart : MonoBehaviour
         //Создание игроков
         GameObject play = Instantiate(GameObject.Find("Play"), new UnityEngine.Vector3(-9f, 0f, 4f), new UnityEngine.Quaternion(0, 0, 0, 0));
         play.name = "Play 1";
+        play = Instantiate(GameObject.Find("Play"), new UnityEngine.Vector3(-9f, 0f, 4f), new UnityEngine.Quaternion(0, 0, 0, 0));
+        play.name = "Play 2";
         //Создание секторов
         for (float i = 1, Qy = 0f, Ox = 0f, r = -1; i <= 52f; i++)
         {
@@ -118,7 +143,24 @@ public class DominacionStart : MonoBehaviour
         obgectName.name = i.ToString();
     }
 
+    public class Players
+    {
+        public class Player1
+        {
+            public GameObject gameObject = GameObject.Find("Play 1");
+            public int money = 10000000;
+            public int sector = 0;
+            public bool move = true;
+        }
 
+        public class Player2
+        {
+            public GameObject gameObject = GameObject.Find("Play 2");
+            public int money = 10000000;
+            public int sector = 0;
+            public bool move = true;
+        }
+    }
 
 
     /*
