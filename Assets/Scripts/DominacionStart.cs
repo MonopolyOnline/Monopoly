@@ -1,3 +1,5 @@
+using System.Numerics;
+using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,8 +21,10 @@ public class DominacionStart : MonoBehaviour
         Create();
         player1.gameObject = GameObject.Find(player1.goName);
         player1.gameObject.GetComponent<Renderer>().material = colorRed;
+        player1.gameObject.transform.position += Test(player1.goName);
         player2.gameObject = GameObject.Find(player2.goName);
         player2.gameObject.GetComponent<Renderer>().material = colorBlue;
+        player2.gameObject.transform.position += Test(player2.goName);
     }
 
     private void Update()
@@ -33,6 +37,7 @@ public class DominacionStart : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 player1.sector += Random.Range(1, 6);
+                Debug.Log(player1.sector);
                 if (player1.sector > 52)
                 {
                     player1.sector -= 52;
@@ -40,6 +45,7 @@ public class DominacionStart : MonoBehaviour
                     player1.money += 500;
                 }
                 player1.gameObject.transform.position = GameObject.Find(player1.sector.ToString()).transform.position;
+                player1.gameObject.transform.position += Test(player1.goName, player1.sector); ;
                 player1.move = false;
                 player2.move = true;
             }
@@ -51,6 +57,7 @@ public class DominacionStart : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 player2.sector += Random.Range(1, 6);
+                Debug.Log(player2.sector);
                 if (player2.sector > 52)
                 {
                     player2.sector -= 52;
@@ -58,9 +65,110 @@ public class DominacionStart : MonoBehaviour
                     player2.money += 500;
                 }
                 player2.gameObject.transform.position = GameObject.Find(player2.sector.ToString()).transform.position;
+                player2.gameObject.transform.position += Test(player2.goName, player2.sector);
                 player2.move = false;
                 player1.move = true;
             }
+            return;
+        }
+    }
+
+
+    UnityEngine.Vector3 Test(string goName, int sector)
+    {
+        UnityEngine.Vector3 vector3 = new UnityEngine.Vector3 (0,0,0);
+        switch (goName)
+        {
+            case "Play 1":
+                {
+                    if (sector == 1)
+                    {
+                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        return vector3;
+                    }
+                    if (sector <= 18)
+                    {
+                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        return vector3;
+                    }
+                    if (sector == 19)
+                    {
+                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        return vector3;
+                    }
+                    if (sector <= 26)
+                    {
+                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        return vector3;
+                    }
+                    if (sector == 27)
+                    {
+                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        return vector3;
+                    }
+                    if (sector <= 44)
+                    {
+                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        return vector3;
+                    }
+                    if (sector == 45)
+                    {
+                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        return vector3;
+                    }
+                    if (sector <= 52)
+                    {
+                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        return vector3;
+                    }
+                    return vector3;
+                }
+            case "Play 2":
+                {
+                    if (sector == 1)
+                    {
+                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        return vector3;
+                    }
+                    if (sector <= 18)
+                    {
+                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        return vector3;
+                    }
+                    if (sector == 19)
+                    {
+                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        return vector3;
+                    }
+                    if (sector <= 26)
+                    {
+                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        return vector3;
+                    }
+                    if (sector == 27)
+                    {
+                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        return vector3;
+                    }
+                    if (sector <= 44)
+                    {
+                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        return vector3;
+                    }
+                    if (sector == 45)
+                    {
+                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        return vector3;
+                    }
+                    if (sector <= 52)
+                    {
+                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        return vector3;
+                    }
+                    return vector3;
+                }
+            default:
+                return vector3;
         }
     }
 
@@ -145,7 +253,6 @@ public class DominacionStart : MonoBehaviour
             }
         }
     }
-
     void CreateSector(float i, float Qy, UnityEngine.Vector3 vector3, float r)
     {
         GameObject obgectName = Instantiate(GameObject.Find("RectCopy"), vector3, new UnityEngine.Quaternion(0, 0, 0, 0));
@@ -162,94 +269,93 @@ public class DominacionStart : MonoBehaviour
     #region[ненужное]
     /*
      using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
-using UnityEditor;
-using UnityEngine;
+    using System.Collections.Generic;
+    using System.Numerics;
+    using UnityEditor;
+    using UnityEngine;
 
-public class DominacionStart : MonoBehaviour
-{
-    void Start()
+    public class DominacionStart : MonoBehaviour
     {
-        //Создание квадратных секторов
-        Instantiate(GameObject.Find("Square"), new Vector3(9.25f, 0, 4.25f), new Quaternion(0, 0, 0, 0));
-        Instantiate(GameObject.Find("Square"), new Vector3(9.25f, 0, -4.25f), new Quaternion(0, 0, 0, 0));
-        Instantiate(GameObject.Find("Square"), new Vector3(-9.25f, 0, -4.25f), new Quaternion(0, 0, 0, 0));
-
-
-
-        //Создание обычных секторов
-        for (float i = 1, Ox = -8f, Oy = 0, Oz = 4.25f, Qy = 0f; i <= 53f; i++, Ox++)
+        void Start()
         {
-            GameObject obgectName;
-            Vector3 vector3;
-            if ( i == 1)
-            {
-                obgectName = Instantiate(GameObject.Find("Square"), new Vector3(-9.25f, 0, 4.25f), new Quaternion(0, 0, 0, 0));
-                Debug.Log($"Create: Name-{obgectName.name} Vector-{obgectName.transform.position} Quaternion-{obgectName.transform.rotation}");
-                obgectName.name = i.ToString();
-                continue;
-            }
-            if (i <= 15)
-            {
-                vector3 = (-9.25f, 0, 4.25f);
-                CreateSector(i, Qy, vector3);
-                continue;
-            }
-            if (i == 16)
-            {
-                obgectName = Instantiate(GameObject.Find("Square"), new Vector3(-9.25f, 0, 4.25f), new Quaternion(0, 0, 0, 0));
-                Debug.Log($"Create: Name-{obgectName.name} Vector-{obgectName.transform.position} Quaternion-{obgectName.transform.rotation}");
-                obgectName.name = i.ToString();
-                Qy += 90;
-                continue;
-            }
-            if (i <= 23)
-            {
-                vector3 = (9.25f, 0, 4.25f);
-                CreateSector(i, Qy, vector3);
-                continue;
-            }
-            if (i == 24)
-            {
-                obgectName = Instantiate(GameObject.Find("Square"), new Vector3(-9.25f, 0, 4.25f), new Quaternion(0, 0, 0, 0));
-                Debug.Log($"Create: Name-{obgectName.name} Vector-{obgectName.transform.position} Quaternion-{obgectName.transform.rotation}");
-                obgectName.name = i.ToString();
-                Qy += 90;
-                continue;
-            }
-            if (i <= 38)
-            {
-                vector3 = (9.25f, 0, -4.25f);
-                CreateSector(i, Qy, vector3);
-                continue;
-            }
-            if (i == 39)
-            {
-                obgectName = Instantiate(GameObject.Find("Square"), new Vector3(-9.25f, 0, 4.25f), new Quaternion(0, 0, 0, 0));
-                Debug.Log($"Create: Name-{obgectName.name} Vector-{obgectName.transform.position} Quaternion-{obgectName.transform.rotation}");
-                obgectName.name = i.ToString();
-                Qy += 90;
-                continue;
-            }
-            if (i <= 46)
-            {
-                vector3 = (-9.25f, 0, -4.25f);
-                CreateSector(i, Qy, vector3);
-                continue;
-            }
-        }
+            //Создание квадратных секторов
+            Instantiate(GameObject.Find("Square"), new Vector3(9.25f, 0, 4.25f), new Quaternion(0, 0, 0, 0));
+            Instantiate(GameObject.Find("Square"), new Vector3(9.25f, 0, -4.25f), new Quaternion(0, 0, 0, 0));
+            Instantiate(GameObject.Find("Square"), new Vector3(-9.25f, 0, -4.25f), new Quaternion(0, 0, 0, 0));
 
-        void CreateSector(float i, float Qy, Vector3 vector3)
-        {
-            GameObject obgectName = Instantiate(GameObject.Find("Rect"), vector3, (0, 0, 0, 0));
-            Debug.Log($"Create: Name-{obgectName.name} Vector-{obgectName.transform.position} Quaternion-{obgectName.transform.rotation}");
-            obgectName.name = i.ToString();
+
+
+            //Создание обычных секторов
+            for (float i = 1, Ox = -8f, Oy = 0, Oz = 4.25f, Qy = 0f; i <= 53f; i++, Ox++)
+            {
+                GameObject obgectName;
+                Vector3 vector3;
+                if ( i == 1)
+                {
+                    obgectName = Instantiate(GameObject.Find("Square"), new Vector3(-9.25f, 0, 4.25f), new Quaternion(0, 0, 0, 0));
+                    Debug.Log($"Create: Name-{obgectName.name} Vector-{obgectName.transform.position} Quaternion-{obgectName.transform.rotation}");
+                    obgectName.name = i.ToString();
+                    continue;
+                }
+                if (i <= 15)
+                {
+                    vector3 = (-9.25f, 0, 4.25f);
+                    CreateSector(i, Qy, vector3);
+                    continue;
+                }
+                if (i == 16)
+                {
+                    obgectName = Instantiate(GameObject.Find("Square"), new Vector3(-9.25f, 0, 4.25f), new Quaternion(0, 0, 0, 0));
+                    Debug.Log($"Create: Name-{obgectName.name} Vector-{obgectName.transform.position} Quaternion-{obgectName.transform.rotation}");
+                    obgectName.name = i.ToString();
+                    Qy += 90;
+                    continue;
+                }
+                if (i <= 23)
+                {
+                    vector3 = (9.25f, 0, 4.25f);
+                    CreateSector(i, Qy, vector3);
+                    continue;
+                }
+                if (i == 24)
+                {
+                    obgectName = Instantiate(GameObject.Find("Square"), new Vector3(-9.25f, 0, 4.25f), new Quaternion(0, 0, 0, 0));
+                    Debug.Log($"Create: Name-{obgectName.name} Vector-{obgectName.transform.position} Quaternion-{obgectName.transform.rotation}");
+                    obgectName.name = i.ToString();
+                    Qy += 90;
+                    continue;
+                }
+                if (i <= 38)
+                {
+                    vector3 = (9.25f, 0, -4.25f);
+                    CreateSector(i, Qy, vector3);
+                    continue;
+                }
+                if (i == 39)
+                {
+                    obgectName = Instantiate(GameObject.Find("Square"), new Vector3(-9.25f, 0, 4.25f), new Quaternion(0, 0, 0, 0));
+                    Debug.Log($"Create: Name-{obgectName.name} Vector-{obgectName.transform.position} Quaternion-{obgectName.transform.rotation}");
+                    obgectName.name = i.ToString();
+                    Qy += 90;
+                    continue;
+                }
+                if (i <= 46)
+                {
+                    vector3 = (-9.25f, 0, -4.25f);
+                    CreateSector(i, Qy, vector3);
+                    continue;
+                }
+            }
+
+            void CreateSector(float i, float Qy, Vector3 vector3)
+            {
+                GameObject obgectName = Instantiate(GameObject.Find("Rect"), vector3, (0, 0, 0, 0));
+                Debug.Log($"Create: Name-{obgectName.name} Vector-{obgectName.transform.position} Quaternion-{obgectName.transform.rotation}");
+                obgectName.name = i.ToString();
+            }
         }
     }
-
 }
-
      */
     #endregion
 }
@@ -262,7 +368,7 @@ public class GamePlayer
 
     public int money = 1000;
 
-    public int sector = 0;
+    public int sector = 1;
 
     public bool move = true;
 
