@@ -21,10 +21,10 @@ public class DominacionStart : MonoBehaviour
         Create();
         player1.gameObject = GameObject.Find(player1.goName);
         player1.gameObject.GetComponent<Renderer>().material = colorRed;
-        player1.gameObject.transform.position += Test(player1.goName);
+        player1.gameObject.transform.position += Test(player1.goName, player1.sector); ;
         player2.gameObject = GameObject.Find(player2.goName);
         player2.gameObject.GetComponent<Renderer>().material = colorBlue;
-        player2.gameObject.transform.position += Test(player2.goName);
+        player2.gameObject.transform.position += Test(player1.goName, player1.sector); ;
     }
 
     private void Update()
@@ -45,7 +45,8 @@ public class DominacionStart : MonoBehaviour
                     player1.money += 500;
                 }
                 player1.gameObject.transform.position = GameObject.Find(player1.sector.ToString()).transform.position;
-                player1.gameObject.transform.position += Test(player1.goName, player1.sector); ;
+                player1.gameObject.transform.position += Test(player1.goName, player1.sector);
+                Debug.Log(Test(player1.goName, player1.sector));
                 player1.move = false;
                 player2.move = true;
             }
@@ -66,6 +67,7 @@ public class DominacionStart : MonoBehaviour
                 }
                 player2.gameObject.transform.position = GameObject.Find(player2.sector.ToString()).transform.position;
                 player2.gameObject.transform.position += Test(player2.goName, player2.sector);
+                Debug.Log(Test(player2.goName, player2.sector));
                 player2.move = false;
                 player1.move = true;
             }
@@ -76,14 +78,14 @@ public class DominacionStart : MonoBehaviour
 
     UnityEngine.Vector3 Test(string goName, int sector)
     {
-        UnityEngine.Vector3 vector3 = new UnityEngine.Vector3 (0,0,0);
+        UnityEngine.Vector3 vector3 = new UnityEngine.Vector3 (1f, 1f, 1f);
         switch (goName)
         {
             case "Play 1":
                 {
                     if (sector == 1)
                     {
-                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        vector3 = new UnityEngine.Vector3(0, 0, 0.65f);
                         return vector3;
                     }
                     if (sector <= 18)
@@ -93,7 +95,7 @@ public class DominacionStart : MonoBehaviour
                     }
                     if (sector == 19)
                     {
-                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        vector3 = new UnityEngine.Vector3(0.65f, 0, 0);
                         return vector3;
                     }
                     if (sector <= 26)
@@ -103,7 +105,7 @@ public class DominacionStart : MonoBehaviour
                     }
                     if (sector == 27)
                     {
-                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        vector3 = new UnityEngine.Vector3(0, 0, -0.65f);
                         return vector3;
                     }
                     if (sector <= 44)
@@ -113,7 +115,7 @@ public class DominacionStart : MonoBehaviour
                     }
                     if (sector == 45)
                     {
-                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        vector3 = new UnityEngine.Vector3(-0.65f, 0, 0);
                         return vector3;
                     }
                     if (sector <= 52)
@@ -127,7 +129,7 @@ public class DominacionStart : MonoBehaviour
                 {
                     if (sector == 1)
                     {
-                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        vector3 = new UnityEngine.Vector3(0, 0, -0.1f);
                         return vector3;
                     }
                     if (sector <= 18)
@@ -137,7 +139,7 @@ public class DominacionStart : MonoBehaviour
                     }
                     if (sector == 19)
                     {
-                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        vector3 = new UnityEngine.Vector3(-0.1f, 0, 0);
                         return vector3;
                     }
                     if (sector <= 26)
@@ -147,7 +149,7 @@ public class DominacionStart : MonoBehaviour
                     }
                     if (sector == 27)
                     {
-                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        vector3 = new UnityEngine.Vector3(0, 0, 0.1f);
                         return vector3;
                     }
                     if (sector <= 44)
@@ -157,7 +159,7 @@ public class DominacionStart : MonoBehaviour
                     }
                     if (sector == 45)
                     {
-                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        vector3 = new UnityEngine.Vector3(0.1f, 0, 0);
                         return vector3;
                     }
                     if (sector <= 52)
