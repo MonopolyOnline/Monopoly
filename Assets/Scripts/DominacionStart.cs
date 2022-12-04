@@ -2,7 +2,6 @@ using System.Numerics;
 using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using static System.Collections.Specialized.BitVector32;
 
 public class DominacionStart : MonoBehaviour
 {
@@ -22,16 +21,18 @@ public class DominacionStart : MonoBehaviour
     [SerializeField] GameObject Square;
     [SerializeField] GameObject Rect;
     [SerializeField] GameObject Player;
+    [SerializeField] GameObject Plus;
+    [SerializeField] GameObject Cube;
 
-    void Start()
+    private void Start()
     {
         Create();
         player1.gameObject = GameObject.Find(player1.goName);
         player1.gameObject.GetComponent<Renderer>().material = colorRed;
-        player1.gameObject.transform.position += Test(player1.goName, player1.sector); ;
+        player1.gameObject.transform.position += Offset(player1.goName, player1.sector); ;
         player2.gameObject = GameObject.Find(player2.goName);
         player2.gameObject.GetComponent<Renderer>().material = colorBlue;
-        player2.gameObject.transform.position += Test(player2.goName, player2.sector); ;
+        player2.gameObject.transform.position += Offset(player2.goName, player2.sector); ;
     }
 
     private void Update()
@@ -54,10 +55,9 @@ public class DominacionStart : MonoBehaviour
                 player1.gameObject.transform.position = GameObject.Find(player1.sector.ToString()).transform.position;
                 if(player1.sector == player2.sector)
                 {
-                    player1.gameObject.transform.position += Test(player1.goName, player1.sector);
-                    player2.gameObject.transform.position += Test(player2.goName, player2.sector);
+                    player1.gameObject.transform.position += Offset(player1.goName, player1.sector);
+                    player2.gameObject.transform.position += Offset(player2.goName, player2.sector);
                 }
-                Debug.Log(Test(player1.goName, player1.sector));
                 player1.move = false;
                 player2.move = true;
             }
@@ -79,10 +79,9 @@ public class DominacionStart : MonoBehaviour
                 player2.gameObject.transform.position = GameObject.Find(player2.sector.ToString()).transform.position;
                 if (player1.sector == player2.sector)
                 {
-                    player1.gameObject.transform.position += Test(player1.goName, player1.sector);
-                    player2.gameObject.transform.position += Test(player2.goName, player2.sector);
+                    player1.gameObject.transform.position += Offset(player1.goName, player1.sector);
+                    player2.gameObject.transform.position += Offset(player2.goName, player2.sector);
                 }
-                Debug.Log(Test(player2.goName, player2.sector));
                 player2.move = false;
                 player1.move = true;
             }
@@ -90,8 +89,7 @@ public class DominacionStart : MonoBehaviour
         }
     }
 
-
-    UnityEngine.Vector3 Test(string goName, int sector)
+    UnityEngine.Vector3 Offset(string goName, int sector)
     {
         UnityEngine.Vector3 vector3 = new UnityEngine.Vector3(0, 0, 0);
         switch (goName)
@@ -268,6 +266,22 @@ public class DominacionStart : MonoBehaviour
                 continue;
             }
         }
+        //Создание дополнительных внутрених секторов
+        GameObject plus = Instantiate(Plus, new UnityEngine.Vector3(-6.75f, 0.1f, 2.5f), new UnityEngine.Quaternion(0, 0, 0, 0));
+        plus.name = "Plus 1";
+        plus = Instantiate(Plus, new UnityEngine.Vector3(0f, 0.1f, 2.5f), new UnityEngine.Quaternion(0, 0, 0, 0));
+        plus.name = "Plus 2";
+        plus = Instantiate(Plus, new UnityEngine.Vector3(6.75f, 0.1f, 2.5f), new UnityEngine.Quaternion(0, 0, 0, 0));
+        plus.name = "Plus 3";
+        plus = Instantiate(Plus, new UnityEngine.Vector3(-6.75f, 0.1f, -2.5f), new UnityEngine.Quaternion(0, 0, 0, 0));
+        plus.name = "Plus 4";
+        plus = Instantiate(Plus, new UnityEngine.Vector3(0f, 0.1f, -2.5f), new UnityEngine.Quaternion(0, 0, 0, 0));
+        plus.name = "Plus 5";
+        plus = Instantiate(Plus, new UnityEngine.Vector3(6.75f, 0.1f, -2.5f), new UnityEngine.Quaternion(0, 0, 0, 0));
+        plus.name = "Plus 6";
+        //Создание кубика
+        GameObject cube = Instantiate(Cube, new UnityEngine.Vector3(0f, 1.4f, 0f), new UnityEngine.Quaternion(0, 0, 0, 0));
+
     }
     private void CreateSector(float i, float Qy, UnityEngine.Vector3 vector3, float r)
     {

@@ -409,6 +409,8 @@ MonoBehaviour:
   Square: {fileID: 856912227276071132, guid: 51533e221541857408296473fc7e2cad, type: 3}
   Rect: {fileID: 3555655651195006779, guid: 9441b623ed5de5a46b4c6455c593e3e9, type: 3}
   Player: {fileID: 143294190184185571, guid: bca178acd392dae4cbc1dcdc4cbb9fe9, type: 3}
+  Plus: {fileID: 7415489197098443539, guid: f73c68d09fe4ed742b7037e47eb54d64, type: 3}
+  Cube: {fileID: 202383713283975646, guid: 0ce34145a72b1024d8f56d16f55119e4, type: 3}
 --- !u!1 &1718070168
 GameObject:
   m_ObjectHideFlags: 0
