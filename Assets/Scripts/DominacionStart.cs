@@ -2,6 +2,7 @@ using System.Numerics;
 using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using static System.Collections.Specialized.BitVector32;
 
 public class DominacionStart : MonoBehaviour
 {
@@ -30,7 +31,7 @@ public class DominacionStart : MonoBehaviour
         player1.gameObject.transform.position += Test(player1.goName, player1.sector); ;
         player2.gameObject = GameObject.Find(player2.goName);
         player2.gameObject.GetComponent<Renderer>().material = colorBlue;
-        player2.gameObject.transform.position += Test(player1.goName, player1.sector); ;
+        player2.gameObject.transform.position += Test(player2.goName, player2.sector); ;
     }
 
     private void Update()
@@ -51,7 +52,11 @@ public class DominacionStart : MonoBehaviour
                     player1.money += 500;
                 }
                 player1.gameObject.transform.position = GameObject.Find(player1.sector.ToString()).transform.position;
-                player1.gameObject.transform.position += Test(player1.goName, player1.sector);
+                if(player1.sector == player2.sector)
+                {
+                    player1.gameObject.transform.position += Test(player1.goName, player1.sector);
+                    player2.gameObject.transform.position += Test(player2.goName, player2.sector);
+                }
                 Debug.Log(Test(player1.goName, player1.sector));
                 player1.move = false;
                 player2.move = true;
@@ -72,7 +77,11 @@ public class DominacionStart : MonoBehaviour
                     player2.money += 500;
                 }
                 player2.gameObject.transform.position = GameObject.Find(player2.sector.ToString()).transform.position;
-                player2.gameObject.transform.position += Test(player2.goName, player2.sector);
+                if (player1.sector == player2.sector)
+                {
+                    player1.gameObject.transform.position += Test(player1.goName, player1.sector);
+                    player2.gameObject.transform.position += Test(player2.goName, player2.sector);
+                }
                 Debug.Log(Test(player2.goName, player2.sector));
                 player2.move = false;
                 player1.move = true;
@@ -84,7 +93,7 @@ public class DominacionStart : MonoBehaviour
 
     UnityEngine.Vector3 Test(string goName, int sector)
     {
-        UnityEngine.Vector3 vector3 = new UnityEngine.Vector3 (1f, 1f, 1f);
+        UnityEngine.Vector3 vector3 = new UnityEngine.Vector3(0, 0, 0);
         switch (goName)
         {
             case "Player 1":
@@ -96,7 +105,7 @@ public class DominacionStart : MonoBehaviour
                     }
                     if (sector <= 18)
                     {
-                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        vector3 = new UnityEngine.Vector3(0, 0, 0.4f);
                         return vector3;
                     }
                     if (sector == 19)
@@ -106,7 +115,7 @@ public class DominacionStart : MonoBehaviour
                     }
                     if (sector <= 26)
                     {
-                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        vector3 = new UnityEngine.Vector3(0.4f, 0, 0);
                         return vector3;
                     }
                     if (sector == 27)
@@ -116,7 +125,7 @@ public class DominacionStart : MonoBehaviour
                     }
                     if (sector <= 44)
                     {
-                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        vector3 = new UnityEngine.Vector3(0, 0, -0.4f);
                         return vector3;
                     }
                     if (sector == 45)
@@ -126,7 +135,7 @@ public class DominacionStart : MonoBehaviour
                     }
                     if (sector <= 52)
                     {
-                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        vector3 = new UnityEngine.Vector3(-0.4f, 0, 0);
                         return vector3;
                     }
                     return vector3;
@@ -140,7 +149,7 @@ public class DominacionStart : MonoBehaviour
                     }
                     if (sector <= 18)
                     {
-                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        vector3 = new UnityEngine.Vector3(0, 0, -0.4f);
                         return vector3;
                     }
                     if (sector == 19)
@@ -150,7 +159,7 @@ public class DominacionStart : MonoBehaviour
                     }
                     if (sector <= 26)
                     {
-                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        vector3 = new UnityEngine.Vector3(-0.4f, 0, 0);
                         return vector3;
                     }
                     if (sector == 27)
@@ -160,7 +169,7 @@ public class DominacionStart : MonoBehaviour
                     }
                     if (sector <= 44)
                     {
-                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        vector3 = new UnityEngine.Vector3(0, 0, 0.4f);
                         return vector3;
                     }
                     if (sector == 45)
@@ -170,7 +179,7 @@ public class DominacionStart : MonoBehaviour
                     }
                     if (sector <= 52)
                     {
-                        vector3 = new UnityEngine.Vector3(0, 0, 0);
+                        vector3 = new UnityEngine.Vector3(0.4f, 0, 0);
                         return vector3;
                     }
                     return vector3;
@@ -179,8 +188,7 @@ public class DominacionStart : MonoBehaviour
                 return vector3;
         }
     }
-
-    void Create()
+    private void Create()
     {
         //Создание основы
         GameObject basis = Instantiate(Basis, new UnityEngine.Vector3(0, 0, 0), new UnityEngine.Quaternion(0, 0, 0, 0));
@@ -261,14 +269,14 @@ public class DominacionStart : MonoBehaviour
             }
         }
     }
-    void CreateSector(float i, float Qy, UnityEngine.Vector3 vector3, float r)
+    private void CreateSector(float i, float Qy, UnityEngine.Vector3 vector3, float r)
     {
         GameObject obgectName = Instantiate(Rect, vector3, new UnityEngine.Quaternion(0, 0, 0, 0));
         Debug.Log($"Create: Name-{i} Vector-{obgectName.transform.position} Quaternion: {obgectName.transform.rotation}");
         obgectName.transform.Rotate(0f, 90f * r, 0f);
         obgectName.name = i.ToString();
     }
-    void CreateSector(float i, UnityEngine.Vector3 vector3)
+    private void CreateSector(float i, UnityEngine.Vector3 vector3)
     {
         GameObject obgectName = Instantiate(Square, vector3, new UnityEngine.Quaternion(0, 0, 0, 0));
         Debug.Log($"Create: Name: {i} Vector: {obgectName.transform.position} Quaternion: {obgectName.transform.rotation}");
@@ -295,3 +303,4 @@ public class GamePlayer
         gameObjectName = goName;
     }
 }
+
