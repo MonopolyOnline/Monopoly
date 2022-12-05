@@ -24,6 +24,8 @@ public class DominacionStart : MonoBehaviour
     [SerializeField] GameObject Plus;
     [SerializeField] GameObject Cube;
 
+    GameObject createObject;
+
     private void Start()
     {
         Create();
@@ -189,16 +191,16 @@ public class DominacionStart : MonoBehaviour
     private void Create()
     {
         //Создание основы
-        GameObject basis = Instantiate(Basis, new UnityEngine.Vector3(0, 0, 0), new UnityEngine.Quaternion(0, 0, 0, 0));
-        basis.name = "Basis";
+        createObject = Instantiate(Basis, new UnityEngine.Vector3(0, 0, 0), new UnityEngine.Quaternion(0, 0, 0, 0));
+        createObject.name = "Basis";
         //Создание фона
-        GameObject backgroundCopy = Instantiate(Background, new UnityEngine.Vector3(0, 0.05f, 0), new UnityEngine.Quaternion(0, 0, 0, 0));
-        backgroundCopy.name = "Background";
+        createObject = Instantiate(Background, new UnityEngine.Vector3(0, 0.05f, 0), new UnityEngine.Quaternion(0, 0, 0, 0));
+        createObject.name = "Background";
         //Создание игроков
-        GameObject player = Instantiate(Player, new UnityEngine.Vector3(-9f, 0f, 4f), new UnityEngine.Quaternion(0, 0, 0, 0));
-        player.name = "Player 1";
-        player = Instantiate(Player, new UnityEngine.Vector3(-9f, 0f, 4f), new UnityEngine.Quaternion(0, 0, 0, 0));
-        player.name = "Player 2";
+        createObject = Instantiate(Player, new UnityEngine.Vector3(-9f, 0f, 4f), new UnityEngine.Quaternion(0, 0, 0, 0));
+        createObject.name = "Player 1";
+        createObject = Instantiate(Player, new UnityEngine.Vector3(-9f, 0f, 4f), new UnityEngine.Quaternion(0, 0, 0, 0));
+        createObject.name = "Player 2";
         //Создание секторов
         for (float i = 1, Qy = 0f, Ox = 0f, r = -1; i <= 52f; i++)
         {
@@ -267,34 +269,33 @@ public class DominacionStart : MonoBehaviour
             }
         }
         //Создание дополнительных внутрених секторов
-        GameObject plus = Instantiate(Plus, new UnityEngine.Vector3(-6.75f, 0.1f, 2.5f), new UnityEngine.Quaternion(0, 0, 0, 0));
-        plus.name = "Plus 1";
-        plus = Instantiate(Plus, new UnityEngine.Vector3(0f, 0.1f, 2.5f), new UnityEngine.Quaternion(0, 0, 0, 0));
-        plus.name = "Plus 2";
-        plus = Instantiate(Plus, new UnityEngine.Vector3(6.75f, 0.1f, 2.5f), new UnityEngine.Quaternion(0, 0, 0, 0));
-        plus.name = "Plus 3";
-        plus = Instantiate(Plus, new UnityEngine.Vector3(-6.75f, 0.1f, -2.5f), new UnityEngine.Quaternion(0, 0, 0, 0));
-        plus.name = "Plus 4";
-        plus = Instantiate(Plus, new UnityEngine.Vector3(0f, 0.1f, -2.5f), new UnityEngine.Quaternion(0, 0, 0, 0));
-        plus.name = "Plus 5";
-        plus = Instantiate(Plus, new UnityEngine.Vector3(6.75f, 0.1f, -2.5f), new UnityEngine.Quaternion(0, 0, 0, 0));
-        plus.name = "Plus 6";
+        createObject = Instantiate(Plus, new UnityEngine.Vector3(-6.75f, 0.1f, 2.5f), new UnityEngine.Quaternion(0, 0, 0, 0));
+        createObject.name = "Plus 1";
+        createObject = Instantiate(Plus, new UnityEngine.Vector3(0f, 0.1f, 2.5f), new UnityEngine.Quaternion(0, 0, 0, 0));
+        createObject.name = "Plus 2";
+        createObject = Instantiate(Plus, new UnityEngine.Vector3(6.75f, 0.1f, 2.5f), new UnityEngine.Quaternion(0, 0, 0, 0));
+        createObject.name = "Plus 3";
+        createObject = Instantiate(Plus, new UnityEngine.Vector3(-6.75f, 0.1f, -2.5f), new UnityEngine.Quaternion(0, 0, 0, 0));
+        createObject.name = "Plus 4";
+        createObject = Instantiate(Plus, new UnityEngine.Vector3(0f, 0.1f, -2.5f), new UnityEngine.Quaternion(0, 0, 0, 0));
+        createObject.name = "Plus 5";
+        createObject = Instantiate(Plus, new UnityEngine.Vector3(6.75f, 0.1f, -2.5f), new UnityEngine.Quaternion(0, 0, 0, 0));
+        createObject.name = "Plus 6";
         //Создание кубика
-        GameObject cube = Instantiate(Cube, new UnityEngine.Vector3(0f, 1.4f, 0f), new UnityEngine.Quaternion(0, 0, 0, 0));
-
+        createObject = Instantiate(Cube, new UnityEngine.Vector3(0f, 1.4f, 0f), new UnityEngine.Quaternion(0, 0, 0, 0));
     }
     private void CreateSector(float i, float Qy, UnityEngine.Vector3 vector3, float r)
     {
-        GameObject obgectName = Instantiate(Rect, vector3, new UnityEngine.Quaternion(0, 0, 0, 0));
-        Debug.Log($"Create: Name-{i} Vector-{obgectName.transform.position} Quaternion: {obgectName.transform.rotation}");
-        obgectName.transform.Rotate(0f, 90f * r, 0f);
-        obgectName.name = i.ToString();
+        createObject = Instantiate(Rect, vector3, new UnityEngine.Quaternion(0, 0, 0, 0));
+        Debug.Log($"Create: Name-{i} Vector-{createObject.transform.position} Quaternion: {createObject.transform.rotation}");
+        createObject.transform.Rotate(0f, 90f * r, 0f);
+        createObject.name = i.ToString();
     }
     private void CreateSector(float i, UnityEngine.Vector3 vector3)
     {
-        GameObject obgectName = Instantiate(Square, vector3, new UnityEngine.Quaternion(0, 0, 0, 0));
-        Debug.Log($"Create: Name: {i} Vector: {obgectName.transform.position} Quaternion: {obgectName.transform.rotation}");
-        obgectName.name = i.ToString();
+        createObject = Instantiate(Square, vector3, new UnityEngine.Quaternion(0, 0, 0, 0));
+        Debug.Log($"Create: Name: {i} Vector: {createObject.transform.position} Quaternion: {createObject.transform.rotation}");
+        createObject.name = i.ToString();
     }
 }
 
