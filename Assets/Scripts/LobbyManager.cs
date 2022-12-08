@@ -13,6 +13,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     private List<RoomItemUI> _roomList = new List<RoomItemUI>();
 
+    PlayerManager playerManager = new PlayerManager();
+
     private void Start()
     {
         Connect();
@@ -42,6 +44,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+
         PhotonNetwork.Instantiate(playerPrefab.name, Vector3.zero, Quaternion.identity);
         Debug.Log(@$"Игрок {PhotonNetwork.NickName}
                 присоединился к комнате {PhotonNetwork.CurrentRoom.Name}");
@@ -63,14 +66,15 @@ public class LobbyManager : MonoBehaviourPunCallbacks
                 MaxPlayers = 6
             };
             PhotonNetwork.CreateRoom(_roomInput.text, options, TypedLobby.Default);
-            PhotonNetwork.LoadLevel(1);
+            PhotonNetwork.LoadLevel(2);
         }
     }
 
     public void JoinRoom(string roomName)
     {
         PhotonNetwork.JoinRoom(roomName);
-        PhotonNetwork.LoadLevel(1);
+        PhotonNetwork.LoadLevel(2);
+        //PhotonNetwork.Instantiate(playerPrefab.name, Vector3.zero, Quaternion.identity);
     }
 
     private void UpdateRoomList(List<RoomInfo> roomList)

@@ -629,7 +629,7 @@ MonoBehaviour:
   _roomInput: {fileID: 948524877}
   _roomItemUIPrefab: {fileID: 6826080387561901886, guid: 576de0d9ed8c7214a990a0aa76287256, type: 3}
   _roomListParent: {fileID: 1300457997}
-  playerPrefab: {fileID: 0}
+  playerPrefab: {fileID: 5090086264489838802, guid: 25a1df8aab7ee3440bd8f3227ff6b030, type: 3}
 --- !u!4 &924817427
 Transform:
   m_ObjectHideFlags: 0
