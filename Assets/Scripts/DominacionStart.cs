@@ -14,6 +14,7 @@ public class DominacionStart : MonoBehaviour
     [SerializeField] Text balancePlayer1;
     [SerializeField] Text balancePlayer2;
 
+    [SerializeField] GameObject Arena;
     [SerializeField] GameObject Basis;
     [SerializeField] GameObject Background;
     [SerializeField] GameObject Square;
@@ -281,17 +282,21 @@ public class DominacionStart : MonoBehaviour
         createObject.name = "Plus 6";
         //Создание кубика
         createObject = Instantiate(Cube, new UnityEngine.Vector3(0f, 1.4f, 0f), new UnityEngine.Quaternion(0, 0, 0, 0));
+        //Создание Арены
+        createObject = Instantiate(Arena, new UnityEngine.Vector3(6.75f, 0.1f, 0), new UnityEngine.Quaternion(0, 0, 0, 0));
+        createObject.name = "Plus Arena";
+    
     }
     private void CreateSector(float i, float Qy, UnityEngine.Vector3 vector3, float r)
     {
         createObject = Instantiate(Rect, vector3, new UnityEngine.Quaternion(0, 0, 0, 0));
         Debug.Log($"Create: Name-{i} Vector-{createObject.transform.position} Quaternion: {createObject.transform.rotation}");
-        createObject.transform.Rotate(0f, 90f * r, 0f);
+        createObject.transform.Rotate(0f, 90f * r + 180, 0f);
         createObject.name = i.ToString();
     }
     private void CreateSector(float i, UnityEngine.Vector3 vector3)
     {
-        createObject = Instantiate(Square, vector3, new UnityEngine.Quaternion(0, 0, 0, 0));
+        createObject = Instantiate(Square, vector3, new UnityEngine.Quaternion(0, 180, 0, 0));
         Debug.Log($"Create: Name: {i} Vector: {createObject.transform.position} Quaternion: {createObject.transform.rotation}");
         createObject.name = i.ToString();
     }

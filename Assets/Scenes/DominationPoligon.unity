@@ -404,6 +404,7 @@ MonoBehaviour:
   colorBlue: {fileID: 2100000, guid: 4c069db373e733d498a830136433485f, type: 2}
   balancePlayer1: {fileID: 2050050045}
   balancePlayer2: {fileID: 419860619}
+  Arena: {fileID: 4348794244800346457, guid: eca981d133eb70947a571dcc4ea45de9, type: 3}
   Basis: {fileID: 1955810432295932334, guid: c89d53e4104eb8d48b6b4b88ba13afe4, type: 3}
   Background: {fileID: 5091923196355132617, guid: c9ad6e1908cc42f4aa37a3954e5ef97b, type: 3}
   Square: {fileID: 856912227276071132, guid: 51533e221541857408296473fc7e2cad, type: 3}
