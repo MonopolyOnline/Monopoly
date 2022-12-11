@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviourPunCallbacks
 {
-    ArrayTexturSector arrayTexturSector = new ArrayTexturSector();
     static System.Random random = new System.Random();
 
     public bool _startFame = false;
@@ -211,17 +210,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         createObject = Instantiate(Square, vector3, new UnityEngine.Quaternion(0, 0, 0, 0));
         Debug.Log($"Create: Name: {i} Vector: {createObject.transform.position} Quaternion: {createObject.transform.rotation}");
         createObject.name = i.ToString();
-    }
-    private void TransformTexture()
-    {
-        for (int i = 1; i < 53; i++)
-        {
-            foreach (GameObject child in GameObject.Find($"{i}").transform)
-            {
-                if (child.name == "Ôîí")
-                    child.GetComponent<Renderer>().material = arrayTexturSector.sectors[i - 1];
-            }
-        }
     }
 
     UnityEngine.Vector3 Offset(string goName, int sector)
