@@ -34,18 +34,18 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     private void FixedUpdate()
     {
-        player1.gameObject = GameObject.Find("Player 1");
-        player2.gameObject = GameObject.Find("Player 2");
+        player1.gameObject = GameObject.Find(player1.goName);
+        player2.gameObject = GameObject.Find(player2.goName);
         if (player2.gameObject != null)
             player2.gameObject.GetComponent<Renderer>().material = colorBlue;
 
-        var playerList = PhotonNetwork.PlayerList;
-        string a = "";
-        foreach (var item in playerList)
-        {
-            a = a + item;
-        }
-        Debug.Log(a);
+        //var playerList = PhotonNetwork.PlayerList;
+        //string a = "";
+        //foreach (var item in playerList)
+        //{
+        //    a = a + item;
+        //}
+        //Debug.Log(a);
     }
 
     private void Update()
