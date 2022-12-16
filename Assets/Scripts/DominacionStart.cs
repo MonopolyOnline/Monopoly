@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class DominacionStart : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class DominacionStart : MonoBehaviour
     [SerializeField] Text balancePlayer1;
     [SerializeField] Text balancePlayer2;
 
+    [SerializeField] GameObject Arena;
     [SerializeField] GameObject Basis;
     [SerializeField] GameObject Background;
     [SerializeField] GameObject Square;
@@ -29,10 +31,13 @@ public class DominacionStart : MonoBehaviour
         Create();
         player1.gameObject = GameObject.Find(player1.goName);
         player1.gameObject.GetComponent<Renderer>().material = colorRed;
-        player1.gameObject.transform.position += Offset(player1.goName, player1.sector); ;
+        player1.gameObject.transform.position += Offset(player1.goName, player1.sector);
         player2.gameObject = GameObject.Find(player2.goName);
         player2.gameObject.GetComponent<Renderer>().material = colorBlue;
-        player2.gameObject.transform.position += Offset(player2.goName, player2.sector); ;
+        player2.gameObject.transform.position += Offset(player2.goName, player2.sector);
+        //CreateTextureSector();
+        GameObject.Find($"2").transform.GetChild(1).GetComponent<MeshRenderer>().material = GameObject.Find("arrayTexturSector").GetComponent<MeshRenderer>().materials[3];
+
     }
 
     private void Update()
@@ -186,6 +191,7 @@ public class DominacionStart : MonoBehaviour
                 return vector3;
         }
     }
+
     private void Create()
     {
         //Создание основы
@@ -194,11 +200,6 @@ public class DominacionStart : MonoBehaviour
         //Создание фона
         createObject = Instantiate(Background, new UnityEngine.Vector3(0, 0.05f, 0), new UnityEngine.Quaternion(0, 0, 0, 0));
         createObject.name = "Background";
-        //Создание игроков
-        createObject = Instantiate(Player, new UnityEngine.Vector3(-9f, 0f, 4f), new UnityEngine.Quaternion(0, 0, 0, 0));
-        createObject.name = "Player 1";
-        createObject = Instantiate(Player, new UnityEngine.Vector3(-9f, 0f, 4f), new UnityEngine.Quaternion(0, 0, 0, 0));
-        createObject.name = "Player 2";
         //Создание секторов
         for (float i = 1, Qy = 0f, Ox = 0f, r = -1; i <= 52f; i++)
         {
@@ -266,38 +267,60 @@ public class DominacionStart : MonoBehaviour
                 continue;
             }
         }
+        //Создание игроков
+        for (int i = 1; i <= 2; i++)
+        {
+            createObject = Instantiate(Player, new UnityEngine.Vector3(-9f, 0f, 4f), new UnityEngine.Quaternion(0, 0, 0, 0));
+            createObject.name = $"Player {i}";
+        }
         //Создание дополнительных внутрених секторов
-        createObject = Instantiate(Plus, new UnityEngine.Vector3(-6.75f, 0.1f, 2.5f), new UnityEngine.Quaternion(0, 0, 0, 0));
-        createObject.name = "Plus 1";
-        createObject = Instantiate(Plus, new UnityEngine.Vector3(0f, 0.1f, 2.5f), new UnityEngine.Quaternion(0, 0, 0, 0));
-        createObject.name = "Plus 2";
-        createObject = Instantiate(Plus, new UnityEngine.Vector3(6.75f, 0.1f, 2.5f), new UnityEngine.Quaternion(0, 0, 0, 0));
-        createObject.name = "Plus 3";
-        createObject = Instantiate(Plus, new UnityEngine.Vector3(-6.75f, 0.1f, -2.5f), new UnityEngine.Quaternion(0, 0, 0, 0));
-        createObject.name = "Plus 4";
-        createObject = Instantiate(Plus, new UnityEngine.Vector3(0f, 0.1f, -2.5f), new UnityEngine.Quaternion(0, 0, 0, 0));
-        createObject.name = "Plus 5";
-        createObject = Instantiate(Plus, new UnityEngine.Vector3(6.75f, 0.1f, -2.5f), new UnityEngine.Quaternion(0, 0, 0, 0));
-        createObject.name = "Plus 6";
+        UnityEngine.Vector3[] vector3Plus = new UnityEngine.Vector3[]
+        {
+            new UnityEngine.Vector3(-6.75f, 0.1f, 2.5f),
+            new UnityEngine.Vector3(0f, 0.1f, 2.5f),
+            new UnityEngine.Vector3(6.75f, 0.1f, 2.5f),
+            new UnityEngine.Vector3(-6.75f, 0.1f, -2.5f),
+            new UnityEngine.Vector3(0f, 0.1f, -2.5f),
+            new UnityEngine.Vector3(6.75f, 0.1f, -2.5f)
+        };
+        for (int i = 1; i<=6; i++)
+        {
+            createObject = Instantiate(Plus, vector3Plus[i-1], new UnityEngine.Quaternion(0, 0, 0, 0));
+            createObject.name = $"Plus {i}";
+        }
         //Создание кубика
         createObject = Instantiate(Cube, new UnityEngine.Vector3(0f, 1.4f, 0f), new UnityEngine.Quaternion(0, 0, 0, 0));
+        createObject.name = "Cube";
+        //Создание Арены
+        createObject = Instantiate(Arena, new UnityEngine.Vector3(6.75f, 0.1f, 0), new UnityEngine.Quaternion(0, 0, 0, 0));
+        createObject.name = "Plus Arena";
     }
     private void CreateSector(float i, float Qy, UnityEngine.Vector3 vector3, float r)
     {
         createObject = Instantiate(Rect, vector3, new UnityEngine.Quaternion(0, 0, 0, 0));
         Debug.Log($"Create: Name-{i} Vector-{createObject.transform.position} Quaternion: {createObject.transform.rotation}");
-        createObject.transform.Rotate(0f, 90f * r, 0f);
+        createObject.transform.Rotate(0f, 90f * r + 180, 0f);
         createObject.name = i.ToString();
     }
     private void CreateSector(float i, UnityEngine.Vector3 vector3)
     {
-        createObject = Instantiate(Square, vector3, new UnityEngine.Quaternion(0, 0, 0, 0));
+        createObject = Instantiate(Square, vector3, new UnityEngine.Quaternion(0, 180, 0, 0));
         Debug.Log($"Create: Name: {i} Vector: {createObject.transform.position} Quaternion: {createObject.transform.rotation}");
         createObject.name = i.ToString();
     }
+    //private void CreateTextureSector()
+    //{
+    //    ArrayTexturSector arrayTexturSector = new ArrayTexturSector();
+
+    //    for (int i = 1; i <= 52; i++)
+    //    {
+    //        GameObject.Find($"{i}").transform.GetChild(1).GetComponent<MeshRenderer>().material = arrayTexturSector.sectors[i - 1];
+    //        GameObject.Find($"{i}").transform.GetChild(1).GetComponent<MeshRenderer>().material = GameObject.Find("arrayTexturSector").GetComponent<ArrayTexturSector>().sectors[i - 1];
+    //    }
+    //}
 }
 
-public class GamePlayer
+ class GamePlayer
 {
     public static string gameObjectName { get; set; } = "";
     public string goName = gameObjectName;

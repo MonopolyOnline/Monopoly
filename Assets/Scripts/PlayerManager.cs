@@ -101,6 +101,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             return;
         }
     }
+
     private void Create()
     {
         //Создание основы
