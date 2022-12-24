@@ -12,17 +12,8 @@ public class Video : MonoBehaviour
     [SerializeField] Material colorRed;
     [SerializeField] Material colorBlue;
 
-    [SerializeField] Text balancePlayer1;
-    [SerializeField] Text balancePlayer2;
-
-    //[SerializeField] GameObject Arena;
-    //[SerializeField] GameObject Basis;
-    //[SerializeField] GameObject Background;
-    //[SerializeField] GameObject Square;
-    //[SerializeField] GameObject Rect;
     [SerializeField] GameObject Player;
-    //[SerializeField] GameObject Plus;
-    //[SerializeField] GameObject Cube;
+
 
     GameObject createObject;
 
@@ -40,9 +31,6 @@ public class Video : MonoBehaviour
 
     private void Update()
     {
-        balancePlayer1.text = $"Баланс игрока 1: {player1.money}";
-        balancePlayer2.text = $"Баланс игрока 2: {player2.money}";
-
         if (player1.move)
         {
             if (Input.GetKeyDown(KeyCode.Space))
